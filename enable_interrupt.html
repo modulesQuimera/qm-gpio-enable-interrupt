@@ -1,0 +1,147 @@
+<script type="text/javascript">
+    RED.nodes.registerType('enable_interrupt',{
+        category: 'GPIO Module',
+        color: '#FFFF00',
+        defaults: {
+            name:{value: ""},
+            mapeamento:{ value:"", type: "gpio-mapping" },
+            port:{value:""},
+            edge:{value: true},
+            qtdGpio:{value:0},
+            controle:{value:0}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "Gpio.svg",
+        label: function() { return this.name? "Enable Interrupt - " + this.name:  "Enable Interrupt" },
+        paletteLabel: "Enable Interrupt",
+        oneditprepare: function() {
+            var self = this
+            self.controle = self.qtdGpio;
+
+            var ports = []
+            // var self = this
+            var config_mapeamento = RED.nodes.node(this.mapeamento)
+            // console.log(config_mapeamento)
+            if(config_mapeamento){
+                ports = [
+                    {value:config_mapeamento.valuePort1, label: "GPA0 - PIN1 - " + config_mapeamento.labelPort1, hasValue:false},
+                    {value:config_mapeamento.valuePort2, label: "GPA1 - PIN2 - " + config_mapeamento.labelPort2, hasValue:false},
+                    {value:config_mapeamento.valuePort3, label: "GPA2 - PIN3 - " + config_mapeamento.labelPort3, hasValue:false},
+                    {value:config_mapeamento.valuePort4, label: "GPA3 - PIN4 - " + config_mapeamento.labelPort4, hasValue:false},
+                    {value:config_mapeamento.valuePort5, label: "GPA4 - PIN5 - " + config_mapeamento.labelPort5, hasValue:false},
+                    {value:config_mapeamento.valuePort6, label: "GPA5 - PIN6 - " + config_mapeamento.labelPort6, hasValue:false},
+                    {value:config_mapeamento.valuePort7, label: "GPA6 - PIN7 - " + config_mapeamento.labelPort7, hasValue:false},
+                    {value:config_mapeamento.valuePort8, label: "GPA7 - PIN8 - " + config_mapeamento.labelPort8, hasValue:false},
+                    {value:config_mapeamento.valuePort9, label: "GPA8 - PIN9 - " + config_mapeamento.labelPort9, hasValue:false},
+                    {value:config_mapeamento.valuePort10, label: "GPA9 - PIN10 - " + config_mapeamento.labelPort10, hasValue:false},
+                    {value:config_mapeamento.valuePort11, label: "GPA10 - PIN11 - " + config_mapeamento.labelPort11, hasValue:false},
+                    {value:config_mapeamento.valuePort12, label: "GPA11 - PIN12 - " + config_mapeamento.labelPort12, hasValue:false},
+                    {value:config_mapeamento.valuePort13, label: "GPB0 - PIN1 - " + config_mapeamento.labelPort13, hasValue:false},
+                    {value:config_mapeamento.valuePort14, label: "GPB1 - PIN2 - " + config_mapeamento.labelPort14, hasValue:false},
+                    {value:config_mapeamento.valuePort15, label: "GPB2 - PIN3 - " + config_mapeamento.labelPort15, hasValue:false},
+                    {value:config_mapeamento.valuePort16, label: "GPB3 - PIN4 - " + config_mapeamento.labelPort16, hasValue:false},
+                    {value:config_mapeamento.valuePort17, label: "GPB4 - PIN5 - " + config_mapeamento.labelPort17, hasValue:false},
+                    {value:config_mapeamento.valuePort18, label: "GPB5 - PIN6 - " + config_mapeamento.labelPort18, hasValue:false},
+                    {value:config_mapeamento.valuePort19, label: "GPB6 - PIN7 - " + config_mapeamento.labelPort19, hasValue:false},
+                    {value:config_mapeamento.valuePort20, label: "GPB7 - PIN8 - " + config_mapeamento.labelPort20, hasValue:false},
+                    {value:config_mapeamento.valuePort21, label: "GPB8 - PIN9 - " + config_mapeamento.labelPort21, hasValue:false},
+                    {value:config_mapeamento.valuePort22, label: "GPB9 - PIN10 - " + config_mapeamento.labelPort22, hasValue:false},
+                    {value:config_mapeamento.valuePort23, label: "GPB10 - PIN11 - " + config_mapeamento.labelPort23, hasValue:false},
+                    {value:config_mapeamento.valuePort24, label: "GPB11 - PIN12 - " + config_mapeamento.labelPort24, hasValue:false},
+                ];
+            }
+            else{
+                ports = [
+                    {label:"GPA0 - PIN1", value: "0", hasValue:false},
+                    {label:"GPA1 - PIN2", value: "1", hasValue:false},
+                    {label:"GPA2 - PIN3", value: "2", hasValue:false},
+                    {label:"GPA3 - PIN4", value: "3", hasValue:false},
+                    {label:"GPA4 - PIN5", value: "4", hasValue:false},
+                    {label:"GPA5 - PIN6", value: "5", hasValue:false},
+                    {label:"GPA6 - PIN7", value: "6", hasValue:false},
+                    {label:"GPA7 - PIN8", value: "7", hasValue:false},
+                    {label:"GPA8 - PIN9", value: "8", hasValue:false},
+                    {label:"GPA9 - PIN10", value: "9", hasValue:false},
+                    {label:"GPA10 - PIN11", value: "10", hasValue:false},
+                    {label:"GPA11 - PIN12", value: "11", hasValue:false},
+                    {label:"GPB0 - PIN1", value: "12", hasValue:false},
+                    {label:"GPB1 - PIN2", value: "13", hasValue:false},
+                    {label:"GPB2 - PIN3", value: "14", hasValue:false},
+                    {label:"GPB3 - PIN4", value: "15", hasValue:false},
+                    {label:"GPB4 - PIN5", value: "16", hasValue:false},
+                    {label:"GPB5 - PIN6", value: "17", hasValue:false},
+                    {label:"GPB6 - PIN7", value: "18", hasValue:false},
+                    {label:"GPB7 - PIN8", value: "19", hasValue:false},
+                    {label:"GPB8 - PIN9", value: "20", hasValue:false},
+                    {label:"GPB9 - PIN10", value: "21", hasValue:false},
+                    {label:"GPB10 - PIN11", value: "22", hasValue:false},
+                    {label:"GPB11 - PIN12", value: "23", hasValue:false},
+                ];
+            }
+            $("#node-config-input-port").typedInput({
+                default: self.port,
+                types:ports
+            });
+        }
+        
+    });
+</script>
+
+<style>
+    select#node-input-mapeamento { width: 100%; display: block !important; }
+    a#node-input-lookup-mapeamento { position: absolute; right: 0px !important; top: 0px; }
+    label{ width: 100% !important; margin-bottom: 2px !important; }
+    .columm{ display: flex !important; flex-direction: column !important; }
+    .columm-50{ display: flex !important; flex-direction: column !important; width: 50% !important; float: left !important; }
+    .columm-30{ display: flex !important; flex-direction: column !important; width: 30% !important; float: left !important; }
+    .columm-70{ display: flex !important; flex-direction: column !important; width: 70% !important; float: left !important; }
+    hr { width: 40% !important; float: left !important; }
+    .hr-div-get{ display: flex !important; justify-content: space-between !important; margin-top: 250px !important; }
+    .optional{ height: max-content !important; margin-top: 10px !important; }
+    .descript{ text-align: center; }
+    .descript-div{ max-width: 444px !important; }
+    span.red-ui-typedInput-type-label { width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .btn-aln{ display: flex !important; flex-direction: row-reverse !important; align-content: center; align-items: flex-end; }
+</style>    
+
+
+<script type="text/html" data-template-name="enable_interrupt">
+    <div class="form-row columm descript-div">
+       <strong class="descript">
+        Assign as input and get the port value.
+        </strong>
+    </div>
+    <div style=" position: relative; display:flex;">
+        <div class="form-row columm-70">
+            <label style="width: 50% !important;" for="node-input-name" ><i class="fa fa-tag"></i> Identification Note</label>
+            <input type="text" id="node-input-name" placeholder="Name" style="width: 100%">
+        </div>
+    </div>
+    <div class="form-row">
+        <label for="node-input-mapeamento"><i class="fa fa-map"></i> PCI Connection Map</label>
+        <input type="text" id="node-input-mapeamento">
+    </div>
+    <div class="hr-div-gp">
+        <hr>
+        <span class="optional">Interrupt</span>
+        <hr>
+    </div>
+    <div style=" position: relative; display:flex;">
+        <div class="form-row columm-70">
+            <label for="node-input-gpio_port" ><i class="fa fa-microchip"></i> GPIO number</label>
+            <input type="text" id="node-config-input-port" style="width: 100%">
+        </div>
+        <div class="form-row columm-30" style="padding-left: 10px;">
+            <label for="node-input-edge" ><i class="fa fa-microchip"></i> GPIO Edge </label>
+            <select id="node-input-edge" style="width:100%;" required>
+                <option value="true" selected>Rising</option>
+                <option value="false">Falling</option>
+            </select>
+        </div>
+    </div>   
+</script>
+
+<script type="text/html" data-help-name="enable_interrupt">
+    <p>Assign as input and get the port value.</p>
+</script>

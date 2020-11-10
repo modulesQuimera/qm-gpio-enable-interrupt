@@ -1,0 +1,25 @@
+{
+  "name": "qm-gpio-enable-interrupt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "enable_interrupt.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/modulesQuimera/qm-gpio-enable-interrupt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/modulesQuimera/qm-gpio-enable-interrupt/issues"
+  },
+  "homepage": "https://github.com/modulesQuimera/qm-gpio-enable-interrupt#readme",
+  "node-red": {
+		"nodes": {
+			"enable_interrupt": "enable_interrupt.js"
+		}
+	}
+}
