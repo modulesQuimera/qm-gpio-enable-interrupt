@@ -5,7 +5,7 @@
         defaults: {
             name:{value: ""},
             mapeamento:{ value:"", type: "gpio-mapping" },
-            port:{value:""},
+            gpio_number:{value:""},
             edge:{value: true},
             qtdGpio:{value:0},
             controle:{value:0}
@@ -80,11 +80,23 @@
                 ];
             }
             $("#node-config-input-port").typedInput({
-                default: self.port,
+                default: self.gpio_number,
                 types:ports
             });
-        }
+        },
+        oneditresize: function() {
+            if(!$("#red-ui-header-button-deploy").hasClass("disabled")){
+                $("#node-dialog-ok").click()
+                $("#red-ui-header-button-deploy").click()
+                $("#red-ui-deploy-dialog-confirm-deploy-deploy").click()
+            }
+        },
+        oneditsave: function() {
+            var mytype = $("#node-config-input-port").typedInput('type');
         
+            $("#node-config-input-port").typedInput('value', mytype);
+            this.gpio_number = $("#node-config-input-port").typedInput('value');
+        }
     });
 </script>
 
@@ -129,11 +141,11 @@
     </div>
     <div style=" position: relative; display:flex;">
         <div class="form-row columm-70">
-            <label for="node-input-gpio_port" ><i class="fa fa-microchip"></i> GPIO number</label>
+            <label for="node-input-port" ><i class="fa fa-microchip"></i> GPIO number:</label>
             <input type="text" id="node-config-input-port" style="width: 100%">
         </div>
         <div class="form-row columm-30" style="padding-left: 10px;">
-            <label for="node-input-edge" ><i class="fa fa-microchip"></i> GPIO Edge </label>
+            <label for="node-input-edge" ><i class="fa fa-microchip"></i> GPIO Edge: </label>
             <select id="node-input-edge" style="width:100%;" required>
                 <option value="true" selected>Rising</option>
                 <option value="false">Falling</option>

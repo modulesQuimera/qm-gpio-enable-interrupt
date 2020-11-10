@@ -9,7 +9,7 @@ module.exports = function(RED) {
         this.serialConfig = RED.nodes.getNode(this.serial);
         this.mapeamento = config.mapeamento;
         this.edge = config.edge;
-        this.port = config.port;
+        this.gpio_number = config.gpio_number;
         
         this.qtdGpio = config.qtdGpio;
  
@@ -18,14 +18,16 @@ module.exports = function(RED) {
 
         node.on('input', function(msg, send, done) {
 
+            node.edge == "false" ? node.edge = false: node.edge = true;
+
             var globalContext = node.context().global;
             var currentMode = globalContext.get("currentMode");
             var command = {
                 type: "GPIO_modular_V1_0",
                 slot: parseInt(mapeamentoNode.slot),
                 method: "enable_interrupt",
-                edge: parseInt(node.edge),
-                GPIO_number: parseInt(node.port), 
+                edge: node.edge,
+                GPIO_number: parseInt(node.gpio_number), 
                 get_output: {},
                 // compare: _compare
             }
