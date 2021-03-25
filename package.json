@@ -1,6 +1,6 @@
 {
   "name": "qm-gpio-enable-interrupt",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "enable_interrupt.js",
   "scripts": {

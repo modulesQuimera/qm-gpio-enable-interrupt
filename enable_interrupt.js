@@ -52,7 +52,6 @@ module.exports = function(RED) {
             }
             globalContext.set("exportFile", file);
             send(msg);
-            console.log(command);
         });
     }
 
